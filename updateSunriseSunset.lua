@@ -9,6 +9,7 @@
 -- Inspired by posts on the Fibaro forum http://forum.fibaro.com
 
 -- Note: This script needs a virtual device (id=90 in example) with two buttons. One to set the sun to 'Risen' and one to 'Set'. They should update the global var 'Sun'.
+-- The file Sun.vfib contains the export of this device.
 
 -- local vars
 local sunriseHour = fibaro:getValue(1,'sunriseHour') 
