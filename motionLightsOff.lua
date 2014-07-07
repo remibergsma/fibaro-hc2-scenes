@@ -48,10 +48,10 @@ while true do
     then
       if lampStatus >= 1
         then
-		  if debug ==1 then fibaro:debug("Current status of light: " .. lampStatus) end
+          if debug ==1 then fibaro:debug("Current status of light: " .. lampStatus) end
           fibaro:call(light, "turnOff");
           if debug ==1 then fibaro:debug("Turned OFF due to no activity") end
-		  fibaro:sleep(1000)
+	  fibaro:sleep(1000)
           lampStatus = tonumber(fibaro:getValue(light, "value"))
     	  if debug ==1 then fibaro:debug("New status of light: " .. lampStatus) end
       elseif debug ==1 then
