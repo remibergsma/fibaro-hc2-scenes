@@ -31,15 +31,15 @@ if debug ==1 then fibaro:debug("We were invoked by " .. startSource["type"]) end
 if (((tonumber(fibaro:getValue(motionSensor, "value")) > 0 )
       -- or we invoke manually
       or startSource["type"] == "other" )
-   -- and the sun is set (does not make sense to switch lights during daytime)
-   and fibaro:getGlobalValue("Sun") == "Set")
+      -- and the sun is set (does not make sense to switch lights during daytime)
+      and fibaro:getGlobalValue("Sun") == "Set")
 then
     -- switch on the light
     if debug ==1 then fibaro:debug("Switching ON light due to motion") end
     if isDimmer == 1
       then
         if debug ==1 then fibaro:debug("Set dim level to " .. dimLevel .. "%") end
-	    fibaro:call(light, "setValue", dimLevel);
+	fibaro:call(light, "setValue", dimLevel);
     else
         if debug ==1 then fibaro:debug("Turned on the light") end
         fibaro:call(light, "turnOn");
