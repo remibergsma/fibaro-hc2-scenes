@@ -62,12 +62,14 @@ while true do
 						elseif debug ==1 then
 							fibaro:debug("Nothing to do, lamp is already off.")
 						end
-				elseif debug ==1 then 
-					fibaro:debug("Nothing to do, timeout is not over yet.")
-				end    
+				elseif debug ==1
+					then 
+						fibaro:debug("Nothing to do, timeout is not over yet.")
+				end
 			else
-				if debug ==1 then fibaro:debug("Ongoing motion, skipping.") end
-    	end
+				if debug ==1 then fibaro:debug("Ongoing motion, skipping.") 
+			end
+		end
 	end
 	if debug ==1 then fibaro:debug("Sleeping " .. sleepTime .. "s before testing again.") end
 	fibaro:sleep(sleepTime*1000)
