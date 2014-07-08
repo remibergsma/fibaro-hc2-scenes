@@ -37,38 +37,33 @@ while true do
 		-- first check for ongoing motion
 		currentStatus = tonumber(fibaro:getValue(motionSensor, "value"))
 		if debug ==1 then fibaro:debug("Testing for ongoing motion..") end
-		if currentStatus == 0
-			then   
-				if debug ==1 then fibaro:debug("No ongoing motion.") end
-				-- how long ago was last motion?
-				time = os.time() 
-				last = tonumber(fibaro:getValue(motionSensor, "lastBreached")) 
-				diff = tonumber(time-last)
-				if debug ==1 then fibaro:debug("Last motion was at " .. last .. ", that is " .. diff .. " sec ago. Current status is: " .. currentStatus) end
-      
-				-- if lights are on and no motion, then switch them off
-				local lightStatus = tonumber(fibaro:getValue(light, "value"))
-				-- lamp will report 1 if on, dimmer will report dimlevel (1-99)
-				if diff > offTimeout
-					then
-						if lightStatus >= 1
-							then
-								if debug ==1 then fibaro:debug("Current status of light: " .. lightStatus) end
-								fibaro:call(light, "turnOff");
-								if debug ==1 then fibaro:debug("Turned OFF due to no activity") end
-								fibaro:sleep(1000)
-								lightStatus = tonumber(fibaro:getValue(light, "value"))
-								if debug ==1 then fibaro:debug("New status of light: " .. lightStatus) end
-						elseif debug ==1 then
-							fibaro:debug("Nothing to do, lamp is already off.")
-						end
-				elseif debug ==1
-					then 
-						fibaro:debug("Nothing to do, timeout is not over yet.")
+		if currentStatus == 0 then   
+			if debug ==1 then fibaro:debug("No ongoing motion.") end
+			-- how long ago was last motion?
+			time = os.time() 
+			last = tonumber(fibaro:getValue(motionSensor, "lastBreached")) 
+			diff = tonumber(time-last)
+			if debug ==1 then fibaro:debug("Last motion was at " .. last .. ", that is " .. diff .. " sec ago. Current status is: " .. currentStatus) end
+
+			-- if lights are on and no motion, then switch them off
+			local lightStatus = tonumber(fibaro:getValue(light, "value"))
+			-- relay switch will report 1 if on, dimmer will report dimlevel (1-99)
+			if diff > offTimeout then
+				if lightStatus >= 1 then
+						if debug ==1 then fibaro:debug("Current status of light: " .. lightStatus) end
+						fibaro:call(light, "turnOff");
+						if debug ==1 then fibaro:debug("Turned OFF due to no activity") end
+						fibaro:sleep(1000)
+						lightStatus = tonumber(fibaro:getValue(light, "value"))
+						if debug ==1 then fibaro:debug("New status of light: " .. lightStatus) end
+				elseif debug ==1 then
+					fibaro:debug("Nothing to do, lamp is already off.")
 				end
-			else
-				if debug ==1 then fibaro:debug("Ongoing motion, skipping.") 
+			elseif debug ==1 then 
+					fibaro:debug("Nothing to do, timeout is not over yet.")
 			end
+		else
+			if debug ==1 then fibaro:debug("Ongoing motion, skipping.") end
 		end
 	end
 	if debug ==1 then fibaro:debug("Sleeping " .. sleepTime .. "s before testing again.") end
