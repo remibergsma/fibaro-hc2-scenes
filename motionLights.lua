@@ -96,7 +96,8 @@ if tonumber(fibaro:getValue(trigger['deviceID'], "value")) > 0 then
 	end
 
 -- no motion reported
-else
+-- only makes sense to check this when the sun is set
+elseif fibaro:getGlobalValue("Sun") == "Set" then
 	if debug ==1 then fibaro:debug("Device " .. trigger['deviceID'] .. ": " .. "Device " .. trigger['deviceID'] .. " reports no more motion." ) end
 	if debug ==1 then fibaro:debug("Device " .. trigger['deviceID'] .. ": " .. "Sleeping " .. offTimeout .. "s before turning OFF.." ) end
 	fibaro:sleep(offTimeout*1000)
@@ -130,4 +131,6 @@ else
 	else
 	if debug ==1 then fibaro:debug("Device " .. trigger['deviceID'] .. ": " .. "Ongoing motion, skipping turning OFF.") end
 	end
+else
+	if debug ==1 then fibaro:debug("Device " .. trigger['deviceID'] .. ": " .. "Device " .. trigger['deviceID'] .. " reports no more motion. Nothing to do during day time." ) end
 end
