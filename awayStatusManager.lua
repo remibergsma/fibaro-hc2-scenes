@@ -4,6 +4,14 @@
 %% globals
 --]]
 
+-- Script to detect if people are at home, based on their iPhone being on the WiFi network
+-- Remi Bergsma github@remi.nl
+
+-- this script has the following requirements to work:
+-- 1. iPhonePresenceChecker virtual device, that does the actual checking. See iPhonePresenceChecker.vfib
+-- 2. For each person, a virtual device that manages the status of that person. See whereIsRemi.vfib for example. You also need a global var to store its state.
+-- 3. Be sure to updat the deviceID's in the virtual devices, as well as in the config below
+
 -- homeStatus device
 local homeStatusDeviceID = 48
 
@@ -21,7 +29,6 @@ local phoneDataArray = {
   { 'Remi', 'remiAtHome', '1' },
   { 'Kaat', 'kaatAtHome', '2' }
 }
-
 
 fibaro:debug("Starting loop..")
 
