@@ -4,7 +4,7 @@
 %% globals
 --]]
 
--- Script to turn off lights when no more motion is detected
+-- Script to set sun to set/risen
 -- Remi Bergsma github@remi.nl
 -- Inspired by posts on the Fibaro forum http://forum.fibaro.com
 
@@ -16,11 +16,12 @@ local sunriseHour = fibaro:getValue(1,'sunriseHour')
 local sunsetHour = fibaro:getValue(1,'sunsetHour') 
 local BeforeSunset = 0 
 local AfterSunrise = 0
-local debug = 1
-
-if debug ==1 then fibaro:debug("Today, sunrise is at " .. sunriseHour .. " and sunset at " .. sunsetHour) end
+local debug = 0
 
 while true do 
+  sunriseHour = fibaro:getValue(1,'sunriseHour') 
+  sunsetHour = fibaro:getValue(1,'sunsetHour')
+  if debug ==1 then fibaro:debug("Today, sunrise is at " .. sunriseHour .. " and sunset at " .. sunsetHour) end
   if (os.date("%H:%M", os.time()+BeforeSunset*60) >= sunsetHour) 
     or (os.date("%H:%M", os.time()-AfterSunrise*60) < sunriseHour) 
       then 
